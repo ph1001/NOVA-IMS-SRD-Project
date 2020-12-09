@@ -61,3 +61,13 @@ create table if not exists `customer_order_content`(
     `quantity` integer not null,
     primary key (`order_item_ID`)
 );
+
+/* Customer Invoice */
+create table if not exists `customer_order_invoice`(
+	`customer_order_ID` integer not null,
+	`invoice_date` date not null, 
+    `payment_received` boolean default false,
+    `address_ID` integer not null,
+    primary key (`customer_order_ID`)
+);
+

@@ -35,3 +35,7 @@ from customer_order_details cod, customer_order_content coc, address a
 where cod.customer_order_ID = coc.customer_order_ID
 and cod.address_ID = a.address_ID
 and cod.customer_order_ID=1;
+
+select *
+from customer_order_invoice coi, address a
+where coi.address_ID = a.address_ID;

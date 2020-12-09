@@ -19,11 +19,11 @@ insert into `address` (`address_ID`, `street`, `house_number`, `postal_code`, `c
 (1, 'Drury St', 18, 'D02 W017', 'Dublin', 'Ireland'),
 (2, 'Bötzowstraße', 5, '10407', 'Berlin', 'Germany');
 
-/* Insert some customer data with shipping dates */
+/* Insert some customer order details data with shipping dates */
 insert into `customer_order_details` (`customer_order_ID`, `customer_order_date`, `shipping_date`, `customer_ID`, `customer_invoice_ID`, `address_ID`) values
 (1, '2020-12_01', '2003-12-03', 1111, 1111, 1);
 
-/* Insert some customer data without shipping dates*/
+/* Insert some customer order details data without shipping dates*/
 insert into `customer_order_details` (`customer_order_ID`, `customer_order_date`, `customer_ID`, `customer_invoice_ID`, `address_ID`) values
 (2, '2020-12-09', 1112, 1112, 2);
 
@@ -34,3 +34,8 @@ insert into customer_order_content (`customer_order_ID`, `product_ID`, `quantity
 (1, 14, 1),
 (2, 22, 1),
 (2, 23, 4);
+
+/* Insert some customer invoice data */
+insert into `customer_order_invoice` (`customer_order_ID`, `invoice_date`, `payment_received`, `address_ID`) values
+(1, '2020-12_02', true, 1),
+(2, '2020-12-10', false, 2); 
