@@ -3,4 +3,14 @@
 use shoeshop;
 
 select *
-from product
+from product;
+
+select *
+from customer;
+
+select *
+from address;
+
+select *
+from customer c, address a
+where c.address_ID = a.address_ID;
