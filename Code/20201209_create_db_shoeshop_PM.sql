@@ -27,17 +27,37 @@ create table if not exists `customer` (
     `name` varchar(30) default null,
     `phone_number` integer default null,
     `email_address` varchar(50) not null,
-    `address_ID` tinyint default null,
+    `address_ID` integer default null,
     primary key (`customer_ID`)
 );
 
 /* Address */
 create table if not exists `address`(
-	`address_ID` tinyint not null,
+	`address_ID` integer not null,
     `street` varchar(50) default null,
-    `house_number` tinyint default null,
+    `house_number` smallint default null,
     `postal_code` varchar(15) not null,
     `city` varchar(30) not null,
     `country_town` varchar(30) not null,
     primary key (`address_ID`)
+);
+
+/* Customer Order Details */
+create table if not exists `customer_order_details`(
+	`customer_order_ID` integer not null,
+    `customer_order_date` date not null,
+    `shipping_date` date default null,
+    `customer_ID` integer not null,
+    `customer_invoice_ID` integer not null,
+    `address_ID` integer default null,
+    primary key (`customer_order_ID`)
+);
+
+/* Customer Order Content */
+create table if not exists `customer_order_content`(
+	`order_item_ID` bigint unsigned auto_increment not null,
+	`customer_order_ID` integer not null,
+    `product_ID` INTEGER NOT NULL,
+    `quantity` integer not null,
+    primary key (`order_item_ID`)
 );
