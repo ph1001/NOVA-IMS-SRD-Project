@@ -74,9 +74,11 @@ ADD CONSTRAINT `fk_supplier_order_content_product`
   
       /* create FK for table supplier_invoice */
 
-ALTER TABLE `supplier_order_content`
-ADD CONSTRAINT `fk_supplier_invoice_supplier_order`
-  FOREIGN KEY (`supplier_order_ID`) REFERENCES `supplier_order_details` (`supplier_order_ID`)
+ALTER TABLE `supplier_invoice`
+ADD CONSTRAINT `fk_supplier_invoice_supplier_order_content`
+  FOREIGN KEY (`supplier_order_ID`) REFERENCES `supplier_order_content` (`supplier_order_ID`)
   ON DELETE RESTRICT
   ON UPDATE CASCADE;
  
+ 
+  
