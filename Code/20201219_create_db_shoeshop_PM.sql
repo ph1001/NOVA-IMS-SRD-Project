@@ -23,19 +23,6 @@ CREATE TABLE IF NOT EXISTS `product` (
     primary key (`product_ID`)
 );
 
-/* Address */
-drop table if exists `address`;
-create table if not exists `address` (
-	`address_ID` integer unsigned auto_increment not null,
-    `street` varchar(50) default null,
-    `house_number` smallint unsigned default null,
-    `house_number_addition` varchar(5) default null,
-    `postal_code` varchar(15) not null,
-    `city` varchar(30) not null,
-    `country_town` varchar(30) not null,
-    primary key (`address_ID`)
-);
-
 /* Customer */
 drop table if exists `customer`;
 create table if not exists `customer` (
