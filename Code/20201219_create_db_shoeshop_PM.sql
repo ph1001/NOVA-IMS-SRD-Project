@@ -12,9 +12,9 @@ CREATE DATABASE `shoeshop` DEFAULT CHARACTER SET = 'utf8' DEFAULT COLLATE 'utf8_
 
 USE shoeshop;
 
-/* Product */
-drop table if exists `product`;
-CREATE TABLE IF NOT EXISTS `product` (
+/* Stock */
+drop table if exists `stock`;
+CREATE TABLE IF NOT EXISTS `stock` (
 	`product_ID` INTEGER unsigned auto_increment NOT NULL,
     `name` varchar(30) DEFAULT NULL,
     `type` varchar(30) DEFAULT NULL,
@@ -35,9 +35,9 @@ create table if not exists `customer` (
     primary key (`customer_ID`)
 );
 
-/* Customer Order Details */
-drop table if exists `customer_order_details`;
-create table if not exists `customer_order_details`(
+/* Customer Order */
+drop table if exists `customer_order`;
+create table if not exists `customer_order`(
 	`customer_order_ID` integer unsigned auto_increment not null,
     `order_date` date not null,
     `shipping_date` date default null,
@@ -47,9 +47,9 @@ create table if not exists `customer_order_details`(
     primary key (`customer_order_ID`)
 );
 
-/* Customer Order Content */
-drop table if exists `customer_order_content`;
-create table if not exists `customer_order_content`(
+/* Customer Order Item */
+drop table if exists `customer_order_item`;
+create table if not exists `customer_order_item`(
 	`order_item_ID` bigint unsigned auto_increment not null,
 	`customer_order_ID` integer unsigned not null,
     `product_ID` INTEGER unsigned NOT NULL,
@@ -81,9 +81,9 @@ create table if not exists `supplier`(
     primary key (`supplier_ID`)
 );
 
-/* Supplier Order Details */
-drop table if exists `supplier_order_details`;
-create table if not exists `supplier_order_details`(
+/* Supplier Order */
+drop table if exists `supplier_order`;
+create table if not exists `supplier_order`(
 	`supplier_order_ID` integer unsigned auto_increment not null,
     `order_date` date not null,
     `products_received` boolean default false,
@@ -92,9 +92,9 @@ create table if not exists `supplier_order_details`(
     primary key (`supplier_order_ID`)
 );
 
-/* Supplier Order Content */
-drop table if exists `supplier_order_content`;
-create table if not exists `supplier_order_content`(
+/* Supplier Order Item */
+drop table if exists `supplier_order_item`;
+create table if not exists `supplier_order_item`(
 	`order_item_ID` bigint unsigned auto_increment not null,
 	`supplier_order_ID` integer unsigned not null,
     `product_ID` INTEGER unsigned NOT NULL,
