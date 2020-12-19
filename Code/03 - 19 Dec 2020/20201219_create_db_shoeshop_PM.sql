@@ -1,16 +1,18 @@
 /* Simplified shoe shop database */
 
-/*
-To do:
-- Make sure that no quantities higher than the stocked quantities are ordered:
-	Done. `available_quantity` is defined as INTEGER unsigned -> can not be smaller than zero.
-*/
 
+/* Drop outdated version if it exists */
 DROP database IF EXISTS shoeshop;
 
+/* Create the database */
 CREATE DATABASE `shoeshop` DEFAULT CHARACTER SET = 'utf8' DEFAULT COLLATE 'utf8_general_ci';
 
+/*tell which database you will use*/
 USE shoeshop;
+
+#######################################
+
+/* Create the database's tables */
 
 /* Stock */
 drop table if exists `stock`;
@@ -34,6 +36,19 @@ create table if not exists `customer` (
     `home_address` varchar(100) default null,
     primary key (`customer_ID`)
 );
+
+/* Log Price */
+drop table if exists `log_price`;
+CREATE TABLE IF NOT EXISTS `log_price` (
+	`log_ID` INTEGER unsigned auto_increment NOT NULL,
+    `product_ID` INTEGER unsigned NOT NULL,
+    `old_unit_price` decimal(8,2) NOT NULL,
+    `new_unit_price` decimal(8,2) NOT NULL,
+    `update_date` date not null,
+    primary key (`log_ID`)
+);
+
+#######################################
 
 /* Customer Order */
 drop table if exists `customer_order`;
@@ -59,7 +74,7 @@ create table if not exists `customer_order_item`(
     primary key (`order_item_ID`)
 );
 
-#############
+#######################################
 
 /* Supplier */
 drop table if exists `supplier`;

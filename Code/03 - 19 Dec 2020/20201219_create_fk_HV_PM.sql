@@ -1,6 +1,15 @@
 /*tell which database you will use*/
 USE shoeshop;
 
+
+/* create FK for table slog_price */
+
+ALTER TABLE `log_price`
+ADD CONSTRAINT `fk_log_price_product`
+  FOREIGN KEY (`product_ID`) REFERENCES `stock` (`product_ID`)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE;
+
   
 /* create FK for table customer_order */
   

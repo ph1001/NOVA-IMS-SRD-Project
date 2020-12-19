@@ -39,3 +39,23 @@ insert into `customer_order_item`(`customer_order_ID`, `product_ID`, `quantity`)
 select product_ID, name, available_quantity from stock;
 
 ##########
+
+/* The price of 'Nike_34' is changed */
+
+/* Check the log */
+select * from log_price;
+
+/* Update the price */
+set SQL_SAFE_UPDATES = 0;
+update stock
+set price = 50.0
+where name = 'Nike_34';
+set SQL_SAFE_UPDATES = 1;
+
+/* Check the new price */
+select name, price 
+from stock
+where name = 'Nike_34';
+
+/* Check the log again */
+select * from log_price;
