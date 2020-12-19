@@ -1,8 +1,7 @@
-/* First draft for implementing the shoe shop database */
+/* Simplified shoe shop database */
 
 /*
 To do:
-- Understand and implement foreign keys and their "on update", "on delete", etc. behaviour
 - Make sure that no quantities higher than the stocked quantities are ordered
 */
 
@@ -42,7 +41,6 @@ create table if not exists `customer_order`(
     `order_date` date not null,
     `shipping_date` date default null,
     `customer_ID` integer unsigned not null,
-    `customer_invoice_ID` integer unsigned default null,
     `shipping_address` varchar(100) not null,
     `payment_received` boolean default false,
     `invoice_date` date not null,
@@ -80,7 +78,6 @@ create table if not exists `supplier_order`(
     `order_date` date not null,
     `products_received` boolean default false,
     `supplier_ID` integer unsigned not null,
-    `supplier_invoice_ID` integer unsigned default null,
     `invoice_date` date not null,
     `paid` boolean default false,
     primary key (`supplier_order_ID`)
