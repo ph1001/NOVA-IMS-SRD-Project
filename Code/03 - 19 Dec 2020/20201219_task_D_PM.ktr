@@ -436,11 +436,11 @@
   <notepads>
   </notepads>
   <connection>
-    <name>test_mysql_connection</name>
+    <name>SRD_project</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>test_connection</database>
+    <database>shoeshop</database>
     <port>3306</port>
     <username>root</username>
     <password>Encrypted 2be98afc86aa7f283b91cb73dd89bb5c0</password>
@@ -1054,9 +1054,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>test_mysql_connection</connection>
-    <schema>test_connection</schema>
-    <table>test_table</table>
+    <connection>SRD_project</connection>
+    <schema>shoeshop</schema>
+    <table>customer</table>
     <truncate>N</truncate>
     <create>N</create>
     <encoding/>
