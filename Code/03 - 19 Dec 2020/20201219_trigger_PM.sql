@@ -1,1 +1,2 @@
-/* Create the triggers from task C. */
+/* Create the triggers for task C. */
+
