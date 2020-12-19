@@ -62,6 +62,7 @@ create table if not exists `customer_order`(
     `invoice_date` date not null,
     `invoice_address` varchar(100) not null,
 	`tax_rate_percent` decimal(3,2) not null,
+    `rating` decimal(3,1) not null,
     primary key (`customer_order_ID`)
 );
 
