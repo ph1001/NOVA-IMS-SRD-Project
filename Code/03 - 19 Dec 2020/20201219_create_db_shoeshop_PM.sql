@@ -36,7 +36,7 @@ create table if not exists `customer` (
     `home_address` varchar(100) default null,
     `age` TINYINT unsigned default null,
     `spending_score` tinyint unsigned default null,
-    `spending category` tinyint unsigned default null,
+    `spending_category` tinyint unsigned default null,
     primary key (`customer_ID`)
 );
 
