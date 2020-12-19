@@ -44,6 +44,9 @@ create table if not exists `customer_order`(
     `customer_ID` integer unsigned not null,
     `customer_invoice_ID` integer unsigned default null,
     `shipping_address` varchar(100) not null,
+    `payment_received` boolean default false,
+    `invoice_date` date not null,
+    `invoice_address` varchar(100) not null,
     primary key (`customer_order_ID`)
 );
 
@@ -55,17 +58,6 @@ create table if not exists `customer_order_item`(
     `product_ID` INTEGER unsigned NOT NULL,
     `quantity` integer unsigned not null,
     primary key (`order_item_ID`)
-);
-
-/* Customer Invoice */
-drop table if exists `customer_invoice`;
-create table if not exists `customer_invoice`(
-	`customer_invoice_ID` integer unsigned auto_increment not null,
-	`customer_order_ID` integer unsigned not null,
-	`invoice_date` date not null, 
-    `payment_received` boolean default false,
-    `invoice_address` varchar(100) not null,
-    primary key (`customer_invoice_ID`)
 );
 
 #############
@@ -89,6 +81,8 @@ create table if not exists `supplier_order`(
     `products_received` boolean default false,
     `supplier_ID` integer unsigned not null,
     `supplier_invoice_ID` integer unsigned default null,
+    `invoice_date` date not null,
+    `paid` boolean default false,
     primary key (`supplier_order_ID`)
 );
 
@@ -100,14 +94,4 @@ create table if not exists `supplier_order_item`(
     `product_ID` INTEGER unsigned NOT NULL,
     `quantity` integer unsigned not null,
     primary key (`order_item_ID`)
-);
-
-/* Supplier Invoice */
-drop table if exists `supplier_invoice`;
-create table if not exists `supplier_invoice`(
-	`supplier_invoice_ID` integer unsigned auto_increment not null,
-	`supplier_order_ID` integer unsigned not null,
-	`invoice_date` date not null, 
-    `paid` boolean default false,
-    primary key (`supplier_invoice_ID`)
 );
