@@ -29,14 +29,14 @@ CREATE TABLE IF NOT EXISTS `stock` (
 drop table if exists `customer`;
 create table if not exists `customer` (
 	`customer_ID` integer unsigned auto_increment not null,
-    `name` varchar(30) default null,
+    `name` varchar(100) default null,
     `phone_number` integer unsigned default null,
     `phone_number_country_prefix` varchar(5) default null,
-    `email_address` varchar(50) not null,
+    `email_address` varchar(100) not null,
     `home_address` varchar(100) default null,
     `age` TINYINT unsigned default null,
     `spending_score` tinyint unsigned default null,
-    `spending_category` tinyint unsigned default null,
+    `spending_category` varchar(10) default null,
     primary key (`customer_ID`)
 );
 
