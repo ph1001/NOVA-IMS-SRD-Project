@@ -2,7 +2,8 @@
 
 /*
 To do:
-- Make sure that no quantities higher than the stocked quantities are ordered
+- Make sure that no quantities higher than the stocked quantities are ordered:
+	Done. `available_quantity` is defined as INTEGER unsigned -> can not be smaller than zero.
 */
 
 DROP database IF EXISTS shoeshop;
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `stock` (
 	`product_ID` INTEGER unsigned auto_increment NOT NULL,
     `name` varchar(30) DEFAULT NULL,
     `type` varchar(30) DEFAULT NULL,
-    `available_quantity` INTEGER unsigned NOT NULL,
+    `available_quantity` INTEGER unsigned NOT NULL, # 'unsigned' ensures that no 'customer_order_item' rows are created that would decreate 'available_quantity below zero.
     `price` decimal(8,2) NOT NULL,
     primary key (`product_ID`)
 );

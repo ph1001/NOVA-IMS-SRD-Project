@@ -17,6 +17,9 @@ insert into `customer` (`name`, `phone_number`, `phone_number_country_prefix`, `
 
 /* This customer places an order */
 
+/* Check available quantity before the order is placed */
+select product_ID, name, available_quantity from stock;
+
 /* Specify which products are ordered and their quantity */
 set @item_1_ID = 1;
 set @item_1_quantity = 2;
@@ -31,5 +34,8 @@ insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shi
 insert into `customer_order_item`(`customer_order_ID`, `product_ID`, `quantity`) values
 ((select customer_order_ID from customer_order ORDER BY customer_order_ID DESC LIMIT 1), @item_1_ID, @item_1_quantity),
 ((select customer_order_ID from customer_order ORDER BY customer_order_ID DESC LIMIT 1), @item_2_ID, @item_2_quantity);
+
+/* Check available quantity after the order is placed */
+select product_ID, name, available_quantity from stock;
 
 ##########
