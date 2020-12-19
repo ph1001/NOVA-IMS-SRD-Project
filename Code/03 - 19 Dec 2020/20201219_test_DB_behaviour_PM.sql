@@ -7,13 +7,6 @@ insert into `stock` (`name`, `type`, `available_quantity`, `unit_price`) values
 ('Nike_34', 'sneaker', 10, 61.50),
 ('Timberland_73', 'boot', 3, 73.20);
 
-
-insert into `log_price` (`product_ID`,`old_unit_price`, `new_unit_price`, `update_date`) values
-((select product_ID from stock ORDER BY product_ID DESC LIMIT 1),55.00, 11.50,'2020-12_05'),
-((select product_ID from stock ORDER BY product_ID DESC LIMIT 1),32.00, 7.20,'2020-12_05');
-
-
-
 ##########
 
 /* A customer creates an account */

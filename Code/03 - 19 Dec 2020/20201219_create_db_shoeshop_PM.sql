@@ -34,6 +34,9 @@ create table if not exists `customer` (
     `phone_number_country_prefix` varchar(5) default null,
     `email_address` varchar(50) not null,
     `home_address` varchar(100) default null,
+    `age` TINYINT unsigned default null,
+    `spending_score` tinyint unsigned default null,
+    `spending category` tinyint unsigned default null,
     primary key (`customer_ID`)
 );
 
