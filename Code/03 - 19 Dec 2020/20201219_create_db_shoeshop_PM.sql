@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `stock` (
     `name` varchar(30) DEFAULT NULL,
     `type` varchar(30) DEFAULT NULL,
     `available_quantity` INTEGER unsigned NOT NULL, # 'unsigned' ensures that no 'customer_order_item' rows are created that would decreate 'available_quantity below zero.
-    `price` decimal(8,2) NOT NULL,
+    `unit_price` decimal(8,2) NOT NULL,
     primary key (`product_ID`)
 );
 
@@ -61,6 +61,7 @@ create table if not exists `customer_order`(
     `payment_received` boolean default false,
     `invoice_date` date not null,
     `invoice_address` varchar(100) not null,
+	`tax_rate_percent` decimal(3,2) not null,
     primary key (`customer_order_ID`)
 );
 
@@ -71,6 +72,7 @@ create table if not exists `customer_order_item`(
 	`customer_order_ID` integer unsigned not null,
     `product_ID` INTEGER unsigned NOT NULL,
     `quantity` integer unsigned not null,
+    `discount_percent` TINYINT unsigned default 0,
     primary key (`order_item_ID`)
 );
 

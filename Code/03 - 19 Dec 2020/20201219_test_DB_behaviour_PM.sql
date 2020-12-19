@@ -3,7 +3,7 @@
 use shoeshop;
 
 /* Two products are added to the shop */
-insert into `stock` (`name`, `type`, `available_quantity`, `price`) values
+insert into `stock` (`name`, `type`, `available_quantity`, `unit_price`) values
 ('Nike_34', 'sneaker', 10, 61.50),
 ('Timberland_73', 'boot', 3, 73.20);
 
@@ -27,8 +27,8 @@ set @item_2_ID = 2;
 set @item_2_quantity = 1;
 
 /* Order is created */
-insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shipping_address`, `payment_received`, `invoice_date`, `invoice_address`) values
-('2020-12_19', null, (select customer_ID from customer ORDER BY customer_ID DESC LIMIT 1), 'Drury St, 18 D02 W017, Dublin, Ireland', false, '2020-12_01', 'Drury St, 18 D02 W017, Dublin, Ireland');
+insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shipping_address`, `payment_received`, `invoice_date`, `invoice_address`, `tax_rate_percent`) values
+('2020-12_19', null, (select customer_ID from customer ORDER BY customer_ID DESC LIMIT 1), 'Drury St, 18 D02 W017, Dublin, Ireland', false, '2020-12_01', 'Drury St, 18 D02 W017, Dublin, Ireland', 18.00);
 
 /* Items are added according to the specification above */
 insert into `customer_order_item`(`customer_order_ID`, `product_ID`, `quantity`) values
@@ -40,20 +40,20 @@ select product_ID, name, available_quantity from stock;
 
 ##########
 
-/* The price of 'Nike_34' is changed */
+/* The unit price of 'Nike_34' is changed */
 
 /* Check the log */
 select * from log_price;
 
-/* Update the price */
+/* Update the unit price */
 set SQL_SAFE_UPDATES = 0;
 update stock
-set price = 50.0
+set unit_price = 50.0
 where name = 'Nike_34';
 set SQL_SAFE_UPDATES = 1;
 
-/* Check the new price */
-select name, price 
+/* Check the new unit price */
+select name, unit_price 
 from stock
 where name = 'Nike_34';
 

@@ -2,7 +2,7 @@
 USE shoeshop;
 
 
-/* create FK for table slog_price */
+/* create FK for table log_price */
 
 ALTER TABLE `log_price`
 ADD CONSTRAINT `fk_log_price_product`
