@@ -22,7 +22,7 @@ order by sum(customer_order_item.value_at_time) desc
 limit 3;
 
 # G.3
-select concat(min(customer_order.order_date),'  &  ',max(customer_order.order_date)) as PeriodOfSales , 
+select concat(min(customer_order.order_date),'  -  ',max(customer_order.order_date)) as PeriodOfSales , 
 concat(sum(stock.unit_price),' €') as TotalSales,
 concat(round(sum(stock.unit_price)/(year(max(customer_order.order_date)) - year(min(customer_order.order_date))),2),' €') as YearlyAverage,
 concat(round(sum(stock.unit_price)/((datediff(max(customer_order.order_date),min(customer_order.order_date)))/30),2),' €') as MonthlyAverage # temporary
