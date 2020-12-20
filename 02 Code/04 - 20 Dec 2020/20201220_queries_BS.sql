@@ -2,43 +2,83 @@ use shoeshop;
 
 
 # G.1
-select customer.name,order_date,stock.name as Name_of_the_Product
-from customer
-join customer_order on customer.customer_ID = customer_order.customer_ID 
-join customer_order_item on customer_order_item.customer_order_and_invoice_ID = customer_order.customer_order_and_invoice_ID
-join stock on stock.product_ID = customer_order_item.product_ID
-where customer_order.order_date between '2020-10_01' and '2020-12_30'
-group by customer.name,order_date,stock.name;
+SELECT customer.name, 
+       order_date, 
+       stock.name AS Name_of_the_Product 
+FROM   customer 
+       JOIN customer_order 
+         ON customer.customer_id = customer_order.customer_id 
+       JOIN customer_order_item 
+         ON customer_order_item.customer_order_and_invoice_id = customer_order.customer_order_and_invoice_id 
+       JOIN stock 
+         ON stock.product_id = customer_order_item.product_id 
+WHERE  customer_order.order_date BETWEEN '2020-10_01' AND '2020-12_30' 
+GROUP  BY customer.name, 
+          order_date, 
+          stock.name; 
 
 
 #G.2
-# The criteria used to define the best customer is the amount wasted in purchases
-select customer.name as Best_Customers, concat(sum(customer_order_item.value_at_time), ' €') as Purchase_Amount
-from customer
-join customer_order on customer.customer_ID = customer_order.customer_ID 
-join customer_order_item on customer_order_item.customer_order_and_invoice_ID = customer_order.customer_order_and_invoice_ID
-group by customer.name
-order by sum(customer_order_item.value_at_time) desc
-limit 3;
+# The criteria used to define the best customer is the amount wasted in purchases 
+SELECT customer.name                                          AS Best_Customers, 
+       Concat(Sum(customer_order_item.value_at_time), ' €') AS Purchase_Amount 
+FROM   customer 
+       JOIN customer_order 
+         ON customer.customer_id = customer_order.customer_id 
+       JOIN customer_order_item 
+         ON customer_order_item.customer_order_and_invoice_id = customer_order.customer_order_and_invoice_id 
+GROUP  BY customer.name 
+ORDER  BY Sum(customer_order_item.value_at_time) DESC 
+LIMIT  3; 
+
+
+SELECT 12 * (YEAR(Max(customer_order.order_date)) - YEAR(Min(customer_order.order_date))) +
+    ((MONTH(Max(customer_order.order_date)) - MONTH(Min(customer_order.order_date)))) +
+    SIGN(DAY(Max(customer_order.order_date)) / DAY(Min(customer_order.order_date))) 
+    from customer_order;
+
+select DATEDIFF(MONTH, (Max(customer_order.order_date), Min(customer_order.order_date)))
+from customer_order;
 
 # G.3
-select concat(min(customer_order.order_date),'  -  ',max(customer_order.order_date)) as PeriodOfSales , 
-concat(sum(customer_order_item.value_at_time),' €') as TotalSales,
-concat(round(sum(customer_order_item.value_at_time)/(year(max(customer_order.order_date)) - year(min(customer_order.order_date))),2),' €') as YearlyAverage,
-concat(round(sum(customer_order_item.value_at_time)/((datediff(max(customer_order.order_date),min(customer_order.order_date)))/30),2),' €') as MonthlyAverage # temporary
-from customer_order
-join customer_order_item on customer_order_item.customer_order_and_invoice_ID = customer_order.customer_order_and_invoice_ID
-;
+SELECT Concat(Min(customer_order.order_date), '  -  ', Max(customer_order.order_date)) AS PeriodOfSales, 
+       Concat(Sum(customer_order_item.value_at_time), ' €') AS TotalSales, 
+       Concat(Round(Sum(customer_order_item.value_at_time) / (Year(Max(customer_order.order_date)) - Year(Min(customer_order.order_date)) ), 2), ' €') AS YearlyAverage, 
+       Concat(Round(Sum(customer_order_item.value_at_time) / 
+                    (SELECT 
+                                    12 * 
+                                 ( Year(Max(customer_order.order_date)) - 
+                                   Year( 
+                                   Min(customer_order.order_date)) ) + ( 
+                                                                ( 
+                           Month(Max( 
+                           customer_order.order_date)) - 
+                    Month(Min(customer_order.order_date)) )) + Sign( 
+                                 Day(Max( 
+                                     customer_order.order_date)) / 
+              Day( 
+              Min( 
+                                                 customer_order.order_date))) 
+              FROM   customer_order), 2), ' €') AS MonthlyAverage 
+FROM   customer_order 
+       JOIN customer_order_item 
+         ON customer_order_item.customer_order_and_invoice_id = 
+            customer_order.customer_order_and_invoice_id; 
+
 
 # G.4
-select substring_index(shipping_address, ',', -2) as City, concat(sum(customer_order_item.value_at_time), ' €') as Total_Sales
-from customer_order 
-join customer_order_item on customer_order_item.customer_order_and_invoice_ID = customer_order.customer_order_and_invoice_ID
-group by City;
+SELECT Substring_index(shipping_address, ',', -2)             AS City, 
+       Concat(Sum(customer_order_item.value_at_time), ' €') AS Total_Sales 
+FROM   customer_order 
+       JOIN customer_order_item 
+         ON customer_order_item.customer_order_and_invoice_id = customer_order.customer_order_and_invoice_id 
+GROUP  BY city; 
 
 
 # G.5
-select substring_index(shipping_address, ',', -2) as City, round(avg(rating),2) as Average_Rating
-from customer_order
-join customer_order_item on customer_order_item.customer_order_and_invoice_ID = customer_order.customer_order_and_invoice_ID
-group by City;
+SELECT Substring_index(shipping_address, ',', -2) AS City, 
+       Round(Avg(rating), 2)                      AS Average_Rating 
+FROM   customer_order 
+       JOIN customer_order_item 
+         ON customer_order_item.customer_order_and_invoice_id = customer_order.customer_order_and_invoice_id 
+GROUP  BY city; 
