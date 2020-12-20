@@ -32,14 +32,6 @@ ORDER  BY Sum(customer_order_item.value_at_time) DESC
 LIMIT  3; 
 
 
-SELECT 12 * (YEAR(Max(customer_order.order_date)) - YEAR(Min(customer_order.order_date))) +
-    ((MONTH(Max(customer_order.order_date)) - MONTH(Min(customer_order.order_date)))) +
-    SIGN(DAY(Max(customer_order.order_date)) / DAY(Min(customer_order.order_date))) 
-    from customer_order;
-
-select DATEDIFF(MONTH, (Max(customer_order.order_date), Min(customer_order.order_date)))
-from customer_order;
-
 # G.3
 SELECT Concat(Min(customer_order.order_date), '  -  ', Max(customer_order.order_date)) AS PeriodOfSales, 
        Concat(Sum(customer_order_item.value_at_time), ' €') AS TotalSales, 
