@@ -40,7 +40,9 @@ create table if not exists `customer` (
     primary key (`customer_ID`)
 );
 
-/* Log Price */
+/* Log Price 
+This table fills automatically when a price is changed
+This behaviour is defined in a trigger */
 drop table if exists `log_price`;
 CREATE TABLE IF NOT EXISTS `log_price` (
 	`log_ID` INTEGER unsigned auto_increment NOT NULL,
@@ -65,7 +67,6 @@ create table if not exists `customer_order`(
     `invoice_date` date not null,
     `invoice_address` varchar(100) not null,
 	`tax_rate_percent` decimal(3,2) not null,
-    `rating` decimal(3,1) default null,
     primary key (`customer_order_ID`)
 );
 
@@ -77,6 +78,7 @@ create table if not exists `customer_order_item`(
     `product_ID` INTEGER unsigned NOT NULL,
     `quantity` integer unsigned not null,
     `discount_percent` TINYINT unsigned default 0,
+    `rating` decimal(3,1) default null,
     primary key (`order_item_ID`)
 );
 
