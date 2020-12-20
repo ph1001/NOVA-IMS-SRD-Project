@@ -13,7 +13,7 @@ select
 customer_order_and_invoice_ID as 'INVOICE NUMBER',
 invoice_date as 'DATE OF ISSUE',
 invoice_address as 'BILLED TO',
-'Shoes24, 123 Street, 123-456-678, our@email.com, ourwebsite.com' as 'our info',
+'Shoes24, Rua do Forno do Tijolo 73-65, 1170-172 Lisbon, Portugal, +351 639 230 003, shoes24@email.com, shoes24.com' as 'our info',
 # Subtotal = (unit_costs * quantities)
 (
 select sum(s.unit_price * coi.quantity) 
