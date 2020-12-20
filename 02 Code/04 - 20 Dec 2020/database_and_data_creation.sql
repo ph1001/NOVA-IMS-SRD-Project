@@ -168,6 +168,32 @@ ADD CONSTRAINT `fk_supplier_order_item_product`
 		ON UPDATE CASCADE;
         
 ############################################################################################################################################
+
+/* Two products are added to the shop */
+insert into `stock` (`name`, `type`, `available_quantity`, `unit_price`) values
+('Nike_34', 'sneaker', 10, 61.50),
+('Timberland_73', 'boot', 3, 73.20),
+('Adidas_48', 'sneaker', 3, 58.20),
+('Adidas_35', 'sneaker', 2, 50.70),
+('Adidas_40', 'sneaker', 4, 55.25),
+('Timberland_70', 'boot', 2, 70.20),
+('Nike_38', 'sneaker', 5, 79.20),
+('Nike_40', 'sneaker', 6, 80.20),
+('Caterpillar_50', 'boot', 2, 68.20),
+('Caterpillar_60', 'boot', 1, 73.80),
+('Caterpillar_70', 'boot', 4, 75.60),
+('New_Balance_30', 'sneaker', 5, 50.20),
+('New_Balance_40', 'sneaker', 4, 65.80),
+('New_Balance_35', 'sneaker', 6, 70.00),
+('Skechers_34', 'sneaker', 5, 75.50),
+('Skechers_38', 'sneaker', 4, 60.00),
+('Skechers_40', 'sneaker', 6, 64.40),
+('Burberry_35', 'high_heels', 5, 95.20),
+('Burberry_38', 'high_heels', 4, 90.65),
+('Burberry_36', 'high_heels', 4, 93.50)
+;
+
+############################################################################################################################################
         
 /* Task C. - create triggers */
 
