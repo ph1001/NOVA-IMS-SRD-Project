@@ -67,11 +67,11 @@ CREATE OR REPLACE VIEW shoeshop.invoice_details
 AS
 select 
 s.name as 'DESCRIPTION',
-s.unit_price as 'UNIT COST',
+coi.value_at_time/coi.quantity as 'UNIT COST',
 coi.quantity as 'QTY',
-(s.unit_price * coi.quantity) as 'AMOUNT'
+coi.value_at_time as 'AMOUNT'
 from stock s, customer_order_item coi 
-where s.product_ID = coi.product_ID and coi.customer_order_and_invoice_ID = 1;
+where s.product_ID = coi.product_ID and coi.customer_order_and_invoice_ID = (select * from parameter_table);
 
 /* Select this view */
 select * from invoice_details;
