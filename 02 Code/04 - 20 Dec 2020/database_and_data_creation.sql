@@ -234,7 +234,7 @@ insert into `customer` (`name`, `phone_number`, `phone_number_country_prefix`, `
 ('Castor Rose', '081345722', '+44', 'ac@ligulaconsectetuerrhoncus.ca', '836-3802 Blandit Street, Lerwick, United Kingdom')
 ;
 
-/* Customer order data */
+/* Historical customer order data */
 insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shipping_address`, `payment_received`, `invoice_date`, `invoice_address`, `tax_rate_percent`) values
 ('2018-01_01', '2018-01_03', 1, 'Drury St, 18 D02 W017, Dublin, Ireland', true, '2018-01_02', 'Drury St, 18 D02 W017, Dublin, Ireland', 10.00),
 ('2018-02_12', '2018-02_15', 2, '348-8958 Feugiat Rd., Utrecht, Netherlands',true, '2018-02_14','348-8958 Feugiat Rd., Utrecht, Netherlands',10.00),
@@ -258,7 +258,7 @@ insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shi
 ('2020-12_19', null, 18, '836-3802 Blandit Street, Lerwick, United Kingdom',false, '2020-12_20','836-3802 Blandit Street, Lerwick, United Kingdom',10.00)
 ;
 
-/* Customer order items data */
+/* Customer order items belonging to the orders specified above */
 insert into `customer_order_item`(`customer_order_and_invoice_ID`, `product_ID`, `quantity`) values
 (1, 5, 1), (1, 4, 1),
 (2, 5, 2),
@@ -313,5 +313,3 @@ begin
     end if;
 end $$
 delimiter ;
-
-/**/
