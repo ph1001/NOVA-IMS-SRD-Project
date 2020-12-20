@@ -69,7 +69,7 @@ create table if not exists `customer_order`(
     `payment_received` boolean default false,
     `invoice_date` date not null,
     `invoice_address` varchar(100) not null,
-	`tax_rate_percent` decimal(3,2) not null,
+	`tax_rate_percent` decimal(8,2) not null,
     primary key (`customer_order_and_invoice_ID`)
 );
 
@@ -81,7 +81,8 @@ create table if not exists `customer_order_item`(
     `product_ID` INTEGER unsigned NOT NULL,
     `quantity` integer unsigned not null,
     `discount_percent` TINYINT unsigned default 0,
-    `rating` decimal(3,1) default null,
+    `rating` decimal(8,2) default null,
+    `value_at_time` decimal(8,2) default NULL,
     primary key (`order_item_ID`)
 );
 
@@ -169,7 +170,23 @@ ADD CONSTRAINT `fk_supplier_order_item_product`
         
 ############################################################################################################################################
 
-/* Two products are added to the shop */
+/* Create a trigger that adds the correct value for 'value_euro_at_time' to a newly added 'customer_order_item */
+
+DROP TRIGGER if exists add_euro_value_at_time;
+delimiter $$
+create trigger add_euro_value_at_time before insert
+on customer_order_item
+for each row
+begin
+	set new.value_at_time = new.quantity * (select unit_price from stock s where s.product_ID = new.product_ID);
+end $$
+delimiter ;
+
+############################################################################################################################################
+
+/* Insert data into database */
+
+/* Product data */
 insert into `stock` (`name`, `type`, `available_quantity`, `unit_price`) values
 ('Nike_34', 'sneaker', 10, 61.50),
 ('Timberland_73', 'boot', 3, 73.20),
@@ -192,6 +209,77 @@ insert into `stock` (`name`, `type`, `available_quantity`, `unit_price`) values
 ('Burberry_38', 'high_heels', 4, 90.65),
 ('Burberry_36', 'high_heels', 4, 93.50)
 ;
+
+/* Customer data */
+insert into `customer` (`name`, `phone_number`, `phone_number_country_prefix`, `email_address`, `home_address`) values
+('Kanna Haniya', '822829974', '+353', 'KannaHaniya@email.com', 'Drury St, 18 D02 W017, Dublin, Ireland'),
+('Jorden Hodges', '995877685', '+31', 'dolor@aliquet.org', '348-8958 Feugiat Rd., Utrecht, Netherlands'),
+('Keefe Bonner', '599699909', '+353', 'ullamcorper.velit@velitQuisquevarius.edu', 'P.O. Box 475, 5958 Gravida St., Galway, Ireland'),
+('Sara Sellers', '745813683', '+44', 'tortor.nibh.sit@Curabitur.net', 'P.O. Box 399, 886 Ullamcorper Road, Kidwelly, United Kingdom'),
+('Audra Larsen', '729972735', '+44', 'Curabitur.vel.lectus@laoreetlectus.net', '9140 Etiam Ave, Stranraer, United Kingdom'),
+('Dean Giles', '633506725', '+353', 'facilisis@tempus.com', 'Ap #366-8809 Auctor St., Dublin, Ireland'),
+('Jacqueline Randolph', '814493759', '+353', 'semper@magnaUttincidunt.edu', 'Evet St. 18, Belfast, Ireland'),
+('Ronan Maynard', '808213602', '+44', 'sodales@justonecante.com', '237 Nisi Rd., Aberdeen, United Kingdom'),
+('Jana Joyce', '899266181', '+32', 'ipsum@nec.co.uk', '224-7722 Velit Ave, Hulshout, Belgium'),
+('Ira Berger', '857278686', '+31', 'eleifend.egestas.Sed@fringilla.com', 'P.O. Box 941, 1926 Sed St., Hilversum, Netherlands'),
+('Uma Parks', '347749363', '+31', 'egestas.a.dui@dolorQuisque.co.uk', 'P.O. Box 606, 8076 Purus St., Lelystad, Netherlands'),
+('Lael Willis', '904200138', '+32', 'suscipit.nonummy.Fusce@blanditmattisCras.co.uk', 'Ap #779-6050 Faucibus St., WagnelŽe, Belgium'),
+('Delilah Golden', '821885741', '+31', 'cursus.Integer.mollis@magna.net', '497-9085 Lacus. Street, Huissen, Netherlands'),
+('McKenzie Greene', '869564481', '+31', 'Integer.sem@Proin.edu', 'Ap #150-131 Eget Rd., Zutphen, Netherlands'),
+('Summer Ball', '077798695', '+31', 'purus.Duis@enim.co.uk', '343-6872 Orci. Ave, Zutphen, Netherlands'),
+('Chanda Newton', '856986328', '+353', 'Nam@Ut.org', '4069 Turpis. Ave, Cork, Ireland'),
+('Delilah Golden', '821885741', '+31', 'cursus.Integer.mollis@magna.net', '497-9085 Lacus. Street, Huissen, Netherlands'),
+('McKenzie Greene', '869564481', '+353', 'Integer.sem@Proin.edu', '343-6872 Orci. Ave, Dublin, Ireland'),
+('Chanda Newton', '856986328', '+353', 'Nam@Ut.org', 'Ap #150-131 Eget Rd., Broechem, Belgium'),
+('Castor Rose', '081345722', '+44', 'ac@ligulaconsectetuerrhoncus.ca', '836-3802 Blandit Street, Lerwick, United Kingdom')
+;
+
+/* Customer order data */
+insert into `customer_order` (`order_date`, `shipping_date`, `customer_ID`, `shipping_address`, `payment_received`, `invoice_date`, `invoice_address`, `tax_rate_percent`) values
+('2018-01_01', '2018-01_03', 1, 'Drury St, 18 D02 W017, Dublin, Ireland', true, '2018-01_02', 'Drury St, 18 D02 W017, Dublin, Ireland', 10.00),
+('2018-02_12', '2018-02_15', 2, '348-8958 Feugiat Rd., Utrecht, Netherlands',true, '2018-02_14','348-8958 Feugiat Rd., Utrecht, Netherlands',10.00),
+('2018-05_20', '2018-05_29', 3,  'P.O. Box 475, 5958 Gravida St., Galway, Ireland',true, '2018-05_25','P.O. Box 475, 5958 Gravida St., Galway, Ireland', 10.00),
+('2018-09_20', '2018-09_29', 4, 'P.O. Box 399, 886 Ullamcorper Road, Kidwelly, United Kingdom',true, '2018-09_25','P.O. Box 399, 886 Ullamcorper Road, Kidwelly, United Kingdom', 10.00),
+('2018-10_06', '2018-10_10', 5, '9140 Etiam Ave, Stranraer, United Kingdom',true, '2018-10_08','9140 Etiam Ave, Stranraer, United Kingdom',12.00),
+('2018-11_01', '2018-11_06', 6,  'Ap #366-8809 Auctor St., Dublin, Ireland',true, '2018-11_04','Ap #366-8809 Auctor St., Dublin, Ireland',12.00),
+('2018-12_19', '2018-12_21', 7, 'Evet St. 18, Belfast, Ireland',true, '2018-12_20','Drury St, 18 D02 W017, Belfast, Ireland',12.00),
+('2019-01_16', '2019-01_20', 8, '237 Nisi Rd., Aberdeen, United Kingdom',true, '2019-01_19','237 Nisi Rd., Aberdeen, United Kingdom',12.00),
+('2019-05_20', '2019-05_22', 4, '224-7722 Velit Ave, Hulshout, Belgium',true, '2019-05_21','224-7722 Velit Ave, Hulshout, Belgium',12.00),
+('2019-08_15', '2019-08_19', 9, 'P.O. Box 941, 1926 Sed St., Hilversum, Netherlands',true, '2019-08_18','P.O. Box 941, 1926 Sed St., Hilversum, Netherlands',12.00),
+('2019-10_05', '2019-10_10', 10, 'P.O. Box 606, 8076 Purus St., Lelystad, Netherlands',true, '2019-10_08','P.O. Box 606, 8076 Purus St., Lelystad, Netherlands',12.00),
+('2019-11_01', '2019-11_03', 11, 'Ap #779-6050 Faucibus St., WagnelŽe, Belgium',true, '2019-11_02','Ap #779-6050 Faucibus St., WagnelŽe, Belgium',10.00),
+('2019-12_23', '2019-12_26', 12, '497-9085 Lacus. Street, Huissen, Netherlands',true, '2019-12_24','497-9085 Lacus. Street, Huissen, Netherlands',10.00),
+('2020-02_13', '2020-02_15', 13, 'Ap #150-131 Eget Rd., Zutphen, Netherlands',true, '2020-02_14','Ap #150-131 Eget Rd., Zutphen, Netherlands',10.00),
+('2020-03_07', '2020-03_10', 2, '343-6872 Orci. Ave, Zutphen, Netherlands',true, '2020-03_09','343-6872 Orci. Ave, Zutphen, Netherlands',10.00),
+('2020-05_01', '2020-05_05', 14, '4069 Turpis. Ave, Cork, Ireland',true, '2020-05_02','4069 Turpis. Ave, Cork, Ireland',10.00),
+('2020-10_18', '2020-10_19', 15, '497-9085 Lacus. Street, Huissen, Netherlands',true, '2020-10_19','497-9085 Lacus. Street, Huissen, Netherlands',10.00),
+('2020-11_18', null, 16, '343-6872 Orci. Ave, Dublin, Ireland',false, '2020-11_18','343-6872 Orci. Ave, Dublin, Ireland',10.00),
+('2020-12_19', '2020-12_21', 17, 'Ap #150-131 Eget Rd., Broechem, Belgium',true, '2020-12_20','Ap #150-131 Eget Rd., Broechem, Belgium',10.00),
+('2020-12_19', null, 18, '836-3802 Blandit Street, Lerwick, United Kingdom',false, '2020-12_20','836-3802 Blandit Street, Lerwick, United Kingdom',10.00)
+;
+
+/* Customer order items data */
+insert into `customer_order_item`(`customer_order_and_invoice_ID`, `product_ID`, `quantity`) values
+(1, 5, 1), (1, 4, 1),
+(2, 5, 2),
+(3, 8, 1), (3, 20, 1), (3, 7, 1),
+(4, 5, 2), (4, 3, 1),
+(5, 13, 3),
+(6, 15, 1), (6, 9, 1), (6, 1, 1), (6, 4, 1),
+(7, 20, 1),
+(8, 14, 1), (8, 4, 1),
+(9, 2, 1),
+(10, 17, 1), (10, 8, 1), (10, 6, 1),
+(11, 13, 1),
+(12, 7, 1),
+(13, 17, 1),
+(14, 14, 1),
+(15, 9, 1), (15, 13, 1), (15, 17, 1), (15, 16, 1),
+(16, 5, 1),
+(17, 11, 1),
+(18, 4, 1), (18, 8, 1),
+(19, 8, 1),
+(20, 5, 1);
 
 ############################################################################################################################################
         
@@ -225,3 +313,5 @@ begin
     end if;
 end $$
 delimiter ;
+
+/**/
