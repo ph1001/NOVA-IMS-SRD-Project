@@ -3,8 +3,6 @@ Task H.:
 Create two views to recreate the information on the INVOICE (one for the head and totals, and another for the details).
 */
 
-/* The orders for which the invoice views should be created are specified in each views' 'where' statements */
-
 /* Create the view for the invoice header and totals */
 
 /* In order to parameterise the view, create a variable representing the ID of the order for which an invoice shall be created.
